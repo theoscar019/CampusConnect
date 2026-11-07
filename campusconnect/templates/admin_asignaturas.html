@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block titulo %}Asignaturas · CampusConnect{% endblock %}
+{% block contenido %}
+<h1>Asignaturas</h1>
+<form method="post" class="fila">
+  {{ csrf_input() }}
+  <div><label for="codigo">Código</label><input id="codigo" name="codigo" required maxlength="20"></div>
+  <div><label for="nombre">Nombre</label><input id="nombre" name="nombre" required maxlength="80"></div>
+  <div><label for="carrera">Carrera</label><input id="carrera" name="carrera" required maxlength="80"></div>
+  <button type="submit">Crear asignatura</button>
+</form>
+<table>
+  <thead><tr><th>Código</th><th>Nombre</th><th>Carrera</th><th>Estado</th><th></th></tr></thead>
+  <tbody>
+  {% for a in asignaturas %}
+    <tr><td>{{ a['codigo'] }}</td><td>{{ a['nombre'] }}</td><td>{{ a['carrera'] }}</td>
+      <td>{{ 'Activa' if a['activa'] else 'Inactiva' }}</td>
+      <td><form method="post" action="{{ url_for('admin.asignatura_alternar', asig_id=a['id']) }}">
+        {{ csrf_input() }}<button class="secundario" type="submit">{{ 'Desactivar' if a['activa'] else 'Activar' }}</button></form></td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

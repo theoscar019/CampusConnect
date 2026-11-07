@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block titulo %}Mi disponibilidad · CampusConnect{% endblock %}
+{% block contenido %}
+<h1>Mi disponibilidad</h1>
+<p class="bajada">Publica los horarios en que puedes atender tutorías.</p>
+<form method="post" class="fila">
+  {{ csrf_input() }}
+  <div><label for="dia">Día</label>
+    <select id="dia" name="dia">{% for d in DIAS %}<option value="{{ loop.index0 }}">{{ d }}</option>{% endfor %}</select></div>
+  <div><label for="inicio">Desde</label><input id="inicio" name="inicio" type="time" required value="17:00"></div>
+  <div><label for="fin">Hasta</label><input id="fin" name="fin" type="time" required value="18:00"></div>
+  <button type="submit">Publicar horario</button>
+</form>
+{% if tramos %}
+<table>
+  <thead><tr><th>Día</th><th>Horario</th><th></th></tr></thead>
+  <tbody>
+  {% for t in tramos %}
+    <tr><td>{{ DIAS[t['dia']] }}</td><td>{{ t['inicio']|hora }} a {{ t['fin']|hora }}</td>
+      <td><form method="post" action="{{ url_for('tutor.disponibilidad_eliminar', tramo_id=t['id']) }}">
+        {{ csrf_input() }}<button class="secundario" type="submit">Quitar</button></form></td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}<p class="vacio">Todavía no publicas horarios.</p>{% endif %}
+{% endblock %}

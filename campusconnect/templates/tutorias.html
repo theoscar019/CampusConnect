@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block titulo %}Tutorías · CampusConnect{% endblock %}
+{% block contenido %}
+<h1>Tutorías</h1>
+<form method="get" class="fila">
+  <div><label for="asignatura_id">Asignatura</label>
+    <select id="asignatura_id" name="asignatura_id">
+      {% for a in asignaturas %}<option value="{{ a['id'] }}" {{ 'selected' if asig_id == a['id'] }}>{{ a['nombre'] }}</option>{% endfor %}
+    </select></div>
+  <button type="submit">Ver horarios de tutores</button>
+</form>
+{% if asig_id %}
+  {% if oferta %}
+  <table>
+    <thead><tr><th>Tutor</th><th>Día</th><th>Horario</th><th></th></tr></thead>
+    <tbody>
+    {% for o in oferta %}
+      <tr><td>{{ o['tutor'] }}</td><td>{{ DIAS[o['dia']] }}</td><td>{{ o['inicio']|hora }} a {{ o['fin']|hora }}</td>
+        <td><form method="post" action="{{ url_for('estudiante.tutoria_solicitar') }}">
+          {{ csrf_input() }}<input type="hidden" name="disponibilidad_id" value="{{ o['id'] }}">
+          <input type="hidden" name="asignatura_id" value="{{ asig_id }}">
+          <button type="submit">Solicitar</button></form></td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}<p class="vacio">No hay horarios de tutores disponibles para esta asignatura.</p>{% endif %}
+{% endif %}
+<section>
+  <h2>Mis solicitudes</h2>
+  {% if mias %}
+  <table>
+    <thead><tr><th>Asignatura</th><th>Tutor</th><th>Horario</th><th>Estado</th><th></th></tr></thead>
+    <tbody>
+    {% for s in mias %}
+      <tr><td>{{ s['asignatura'] }}</td><td>{{ s['tutor'] }}</td>
+        <td>{{ DIAS[s['dia']] }} {{ s['inicio']|hora }}–{{ s['fin']|hora }}</td>
+        <td><span class="estado {{ s['estado'] }}">{{ s['estado'] }}</span>{% if s['motivo'] %} · {{ s['motivo'] }}{% endif %}</td>
+        <td>{% if s['estado'] in ('pendiente', 'aceptada') %}
+          <form method="post" action="{{ url_for('estudiante.tutoria_cancelar', sol_id=s['id']) }}">
+            {{ csrf_input() }}<button class="secundario" type="submit">Cancelar</button></form>{% endif %}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}<p class="vacio">Aún no has solicitado tutorías.</p>{% endif %}
+</section>
+{% endblock %}

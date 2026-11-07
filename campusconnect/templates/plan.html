@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block titulo %}Plan de estudio · CampusConnect{% endblock %}
+{% block contenido %}
+<h1>Plan de estudio</h1>
+<form method="post" action="{{ url_for('estudiante.plan_generar') }}" class="accion">
+  {{ csrf_input() }}
+  <button type="submit">{{ 'Reorganizar plan' if plan else 'Generar plan' }}</button>
+  <span class="ayuda">Usa tus tramos libres de los próximos 7 días y tus evaluaciones pendientes.</span>
+</form>
+{% if plan and plan['alerta'] %}<p class="aviso error">{{ plan['alerta'] }} <a href="{{ url_for('estudiante.tutorias') }}">Buscar tutor</a></p>{% endif %}
+{% if dias %}
+<div class="semana">
+  {% for fecha, sesiones in dias %}
+  <section class="dia">
+    <h2>{{ DIAS[fecha.weekday()] }} {{ fecha.strftime('%d/%m') }}</h2>
+    {% for s in sesiones %}
+      <div class="sesion {{ 'pausa' if s['es_pausa'] else 'estudio' }}">
+        <span class="horas">{{ s['inicio']|hora }}–{{ s['fin']|hora }}</span>
+        <span>{{ s['asignatura'] }}</span>
+      </div>
+    {% endfor %}
+  </section>
+  {% endfor %}
+</div>
+{% elif plan %}
+  <p class="vacio">El plan no tiene sesiones: ninguno de tus tramos libres cae antes de una evaluación.</p>
+{% else %}
+  <p class="vacio">Todavía no generas un plan. Registra tus tramos y evaluaciones, y presiona «Generar plan».</p>
+{% endif %}
+{% endblock %}

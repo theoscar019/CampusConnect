@@ -1,0 +1,77 @@
+Resultados de las pruebas automatizadas de CampusConnect
+Generado: 2026-11-07 con: python -m unittest discover -s tests -t . -v
+Python 3.12.3, Flask 3.1.3
+
+test_crear_asignatura_y_ver_reportes (tests.test_integracion.TestAdministrador.test_crear_asignatura_y_ver_reportes) ... ok
+test_desactivar_tutor_le_impide_iniciar_sesion (tests.test_integracion.TestAdministrador.test_desactivar_tutor_le_impide_iniciar_sesion) ... ok
+test_alerta_de_sobrecarga (tests.test_integracion.TestFlujoEstudiante.test_alerta_de_sobrecarga) ... ok
+test_plan_requiere_horario_y_evaluaciones (tests.test_integracion.TestFlujoEstudiante.test_plan_requiere_horario_y_evaluaciones) ... ok
+test_registro_login_y_plan_completo (tests.test_integracion.TestFlujoEstudiante.test_registro_login_y_plan_completo) ... ok
+test_reorganizar_reemplaza_el_plan_anterior (tests.test_integracion.TestFlujoEstudiante.test_reorganizar_reemplaza_el_plan_anterior) ... ok
+test_validaciones_de_horario_y_evaluaciones (tests.test_integracion.TestFlujoEstudiante.test_validaciones_de_horario_y_evaluaciones) ... ok
+test_grupo_lleno_no_acepta_mas_miembros (tests.test_integracion.TestGrupos.test_grupo_lleno_no_acepta_mas_miembros) ... ok
+test_sin_horarios_compatibles_no_se_une (tests.test_integracion.TestGrupos.test_sin_horarios_compatibles_no_se_une) ... ok
+test_union_a_grupo_compatible_y_aviso_a_miembros (tests.test_integracion.TestGrupos.test_union_a_grupo_compatible_y_aviso_a_miembros) ... ok
+test_cancelar_libera_el_horario (tests.test_integracion.TestTutorias.test_cancelar_libera_el_horario) ... ok
+test_flujo_completo_solicitar_y_aceptar (tests.test_integracion.TestTutorias.test_flujo_completo_solicitar_y_aceptar) ... ok
+test_horario_incompatible_se_rechaza (tests.test_integracion.TestTutorias.test_horario_incompatible_se_rechaza) ... ok
+test_horario_ya_tomado_no_se_puede_reservar_dos_veces (tests.test_integracion.TestTutorias.test_horario_ya_tomado_no_se_puede_reservar_dos_veces) ... ok
+test_rechazo_exige_motivo (tests.test_integracion.TestTutorias.test_rechazo_exige_motivo) ... ok
+test_fusionar_bloques_une_solapados (tests.test_planner.TestPlanner.test_fusionar_bloques_une_solapados) ... ok
+test_la_evaluacion_mas_prioritaria_obtiene_el_primer_bloque (tests.test_planner.TestPlanner.test_la_evaluacion_mas_prioritaria_obtiene_el_primer_bloque) ... ok
+test_minutos_requeridos_minimo_y_escala (tests.test_planner.TestPlanner.test_minutos_requeridos_minimo_y_escala) ... ok
+test_no_planifica_el_dia_de_la_evaluacion (tests.test_planner.TestPlanner.test_no_planifica_el_dia_de_la_evaluacion) ... ok
+test_pausa_activa_despues_de_estudio_continuo (tests.test_planner.TestPlanner.test_pausa_activa_despues_de_estudio_continuo) ... ok
+test_prioridad_aumenta_con_peso_dificultad_y_cercania (tests.test_planner.TestPlanner.test_prioridad_aumenta_con_peso_dificultad_y_cercania) ... ok
+test_sesiones_solo_en_bloques_libres_y_antes_de_la_fecha (tests.test_planner.TestPlanner.test_sesiones_solo_en_bloques_libres_y_antes_de_la_fecha) ... ok
+test_sin_bloques_todo_es_deficit (tests.test_planner.TestPlanner.test_sin_bloques_todo_es_deficit) ... ok
+test_sin_solapes_entre_sesiones (tests.test_planner.TestPlanner.test_sin_solapes_entre_sesiones) ... ok
+test_sobrecarga_cuando_las_horas_no_alcanzan (tests.test_planner.TestPlanner.test_sobrecarga_cuando_las_horas_no_alcanzan) ... ok
+test_cabeceras_de_seguridad (tests.test_seguridad.TestConfiguracionYCSRF.test_cabeceras_de_seguridad) ... ok
+test_cuerpo_demasiado_grande_se_rechaza (tests.test_seguridad.TestConfiguracionYCSRF.test_cuerpo_demasiado_grande_se_rechaza) ... ok
+test_modo_debug_desactivado_y_errores_sin_detalle_tecnico (tests.test_seguridad.TestConfiguracionYCSRF.test_modo_debug_desactivado_y_errores_sin_detalle_tecnico) ... ok
+test_post_sin_token_csrf_se_rechaza (tests.test_seguridad.TestConfiguracionYCSRF.test_post_sin_token_csrf_se_rechaza) ... ok
+test_se_auditan_eventos_de_seguridad (tests.test_seguridad.TestConfiguracionYCSRF.test_se_auditan_eventos_de_seguridad) ... ok
+test_el_registro_no_permite_elegir_rol (tests.test_seguridad.TestControlDeAcceso.test_el_registro_no_permite_elegir_rol) ... ok
+test_estudiante_no_accede_a_rutas_de_admin_ni_tutor (tests.test_seguridad.TestControlDeAcceso.test_estudiante_no_accede_a_rutas_de_admin_ni_tutor) ... ok
+test_no_se_puede_borrar_el_horario_de_otra_persona (tests.test_seguridad.TestControlDeAcceso.test_no_se_puede_borrar_el_horario_de_otra_persona) ... ok
+test_no_se_puede_responder_la_solicitud_de_otro_tutor (tests.test_seguridad.TestControlDeAcceso.test_no_se_puede_responder_la_solicitud_de_otro_tutor) ... ok
+test_rutas_privadas_redirigen_al_login (tests.test_seguridad.TestControlDeAcceso.test_rutas_privadas_redirigen_al_login) ... ok
+test_tutor_no_accede_a_funciones_de_estudiante (tests.test_seguridad.TestControlDeAcceso.test_tutor_no_accede_a_funciones_de_estudiante) ... ok
+test_bloqueo_tras_intentos_fallidos (tests.test_seguridad.TestCriptografiaYSesion.test_bloqueo_tras_intentos_fallidos) ... ok
+test_cookie_de_sesion_httponly_y_samesite (tests.test_seguridad.TestCriptografiaYSesion.test_cookie_de_sesion_httponly_y_samesite) ... ok
+test_la_contrasena_se_guarda_con_hash (tests.test_seguridad.TestCriptografiaYSesion.test_la_contrasena_se_guarda_con_hash) ... ok
+test_logout_cierra_la_sesion (tests.test_seguridad.TestCriptografiaYSesion.test_logout_cierra_la_sesion) ... ok
+test_mensaje_de_login_no_revela_si_el_usuario_existe (tests.test_seguridad.TestCriptografiaYSesion.test_mensaje_de_login_no_revela_si_el_usuario_existe) ... ok
+test_registro_rechaza_dominio_externo_y_clave_debil (tests.test_seguridad.TestCriptografiaYSesion.test_registro_rechaza_dominio_externo_y_clave_debil) ... ok
+test_csv_neutraliza_formulas (tests.test_seguridad.TestInyeccionYXSS.test_csv_neutraliza_formulas) ... ok
+test_inyeccion_sql_en_formularios_se_rechaza (tests.test_seguridad.TestInyeccionYXSS.test_inyeccion_sql_en_formularios_se_rechaza) ... ok
+test_inyeccion_sql_en_login_no_autentica (tests.test_seguridad.TestInyeccionYXSS.test_inyeccion_sql_en_login_no_autentica) ... ok
+test_xss_se_escapa_al_mostrar_datos (tests.test_seguridad.TestInyeccionYXSS.test_xss_se_escapa_al_mostrar_datos) ... ok
+test_elige_el_grupo_mas_compatible (tests.test_validadores_y_matching.TestMatching.test_elige_el_grupo_mas_compatible) ... ok
+test_la_estrategia_es_intercambiable (tests.test_validadores_y_matching.TestMatching.test_la_estrategia_es_intercambiable) ... ok
+test_minutos_en_comun (tests.test_validadores_y_matching.TestMatching.test_minutos_en_comun) ... ok
+test_sin_compatibilidad_devuelve_none (tests.test_validadores_y_matching.TestMatching.test_sin_compatibilidad_devuelve_none) ... ok
+test_correo_institucional (tests.test_validadores_y_matching.TestValidadores.test_correo_institucional) ... ok
+test_entero_y_texto (tests.test_validadores_y_matching.TestValidadores.test_entero_y_texto) ... ok
+test_fecha_futura (tests.test_validadores_y_matching.TestValidadores.test_fecha_futura) ... ok
+test_hay_solape (tests.test_validadores_y_matching.TestValidadores.test_hay_solape) ... ok
+test_hora_y_tramo (tests.test_validadores_y_matching.TestValidadores.test_hora_y_tramo) ... ok
+test_politica_de_contrasenas (tests.test_validadores_y_matching.TestValidadores.test_politica_de_contrasenas) ... ok
+
+----------------------------------------------------------------------
+Ran 56 tests in 13.082s
+
+OK
+
+Mediciones de rendimiento: python scripts/benchmark.py 200
+(cliente de pruebas de Flask: sin latencia de red)
+
+Prueba                                                     n    media      p50      p95      máx  errores
+Algoritmo generar_plan (5 evaluaciones, 7 días)         2000    0.03ms    0.03ms    0.05ms    0.13ms     0.0%
+GET /login                                               200    1.06ms    1.05ms    1.25ms    1.65ms     0.0%
+GET /panel                                               200    1.04ms    1.04ms    1.21ms    1.52ms     0.0%
+POST /plan/generar                                       200    3.18ms    3.14ms    3.89ms    5.16ms     0.0%
+GET /plan                                                200    1.39ms    1.31ms    1.87ms    6.68ms     0.0%
+GET /evaluaciones                                        200    1.44ms    1.43ms    1.77ms    6.92ms     0.0%
+POST /login (incluye verificación de hash)                40   88.64ms   87.99ms   95.11ms  103.73ms     0.0%

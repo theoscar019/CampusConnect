@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block titulo %}Tutores · CampusConnect{% endblock %}
+{% block contenido %}
+<h1>Tutores</h1>
+<form method="post" class="fila">
+  {{ csrf_input() }}
+  <div><label for="nombre">Nombre</label><input id="nombre" name="nombre" required maxlength="80"></div>
+  <div><label for="correo">Correo institucional</label><input id="correo" name="correo" type="email" required maxlength="190"></div>
+  <div><label for="contrasena">Contraseña temporal</label><input id="contrasena" name="contrasena" type="password" autocomplete="new-password" required maxlength="128"></div>
+  <fieldset><legend>Asignaturas que atiende</legend>
+    {% for a in asignaturas %}<label class="check"><input type="checkbox" name="asignaturas" value="{{ a['id'] }}"> {{ a['nombre'] }}</label>{% endfor %}
+  </fieldset>
+  <button type="submit">Crear tutor</button>
+</form>
+<table>
+  <thead><tr><th>Nombre</th><th>Correo</th><th>Asignaturas</th><th>Estado</th><th></th></tr></thead>
+  <tbody>
+  {% for t in tutores %}
+    <tr><td>{{ t['nombre'] }}</td><td>{{ t['correo'] }}</td><td>{{ t['asignaturas'] or '—' }}</td>
+      <td>{{ 'Activo' if t['activo'] else 'Inactivo' }}</td>
+      <td><form method="post" action="{{ url_for('admin.tutor_alternar', tutor_id=t['id']) }}">
+        {{ csrf_input() }}<button class="secundario" type="submit">{{ 'Desactivar' if t['activo'] else 'Activar' }}</button></form></td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

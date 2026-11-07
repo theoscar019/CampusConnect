@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block titulo %}Iniciar sesión · CampusConnect{% endblock %}
+{% block contenido %}
+<section class="acceso">
+  <h1>Organiza tu estudio, encuentra con quién estudiar</h1>
+  <p class="bajada">Ingresa con tu correo institucional.</p>
+  <form method="post" novalidate>
+    {{ csrf_input() }}
+    <label for="correo">Correo institucional</label>
+    <input id="correo" name="correo" type="email" autocomplete="username" required maxlength="190">
+    <label for="contrasena">Contraseña</label>
+    <input id="contrasena" name="contrasena" type="password" autocomplete="current-password" required maxlength="128">
+    <button type="submit">Iniciar sesión</button>
+  </form>
+  <p>¿Primera vez? <a href="{{ url_for('auth.registro') }}">Crea tu cuenta de estudiante</a>.</p>
+</section>
+{% endblock %}

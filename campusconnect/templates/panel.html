@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block titulo %}Inicio · CampusConnect{% endblock %}
+{% block contenido %}
+<h1>Hola, {{ g.usuario['nombre'] }}</h1>
+{% if g.usuario['rol'] == 'estudiante' %}
+  <p class="bajada">Tu camino para esta semana: registra tus tramos libres y evaluaciones, y genera tu plan.</p>
+  <ol class="pasos">
+    <li><a href="{{ url_for('estudiante.horario') }}">Registra tus tramos libres</a></li>
+    <li><a href="{{ url_for('estudiante.evaluaciones') }}">Agrega tus próximas evaluaciones</a></li>
+    <li><a href="{{ url_for('estudiante.plan') }}">Genera tu plan de estudio</a></li>
+  </ol>
+{% elif g.usuario['rol'] == 'tutor' %}
+  <p class="bajada">Publica tus horarios y responde las solicitudes de los estudiantes.</p>
+  <p><a href="{{ url_for('tutor.solicitudes') }}">Ver solicitudes</a></p>
+{% else %}
+  <p class="bajada">Administra asignaturas y tutores, y revisa el uso de la plataforma.</p>
+  <p><a href="{{ url_for('admin.reportes') }}">Ver reportes</a></p>
+{% endif %}
+<section>
+  <h2>Avisos</h2>
+  {% if notificaciones %}
+    <ul class="lista">
+      {% for n in notificaciones %}<li>{{ n['mensaje'] }}</li>{% endfor %}
+    </ul>
+  {% else %}
+    <p class="vacio">No tienes avisos nuevos.</p>
+  {% endif %}
+</section>
+{% endblock %}

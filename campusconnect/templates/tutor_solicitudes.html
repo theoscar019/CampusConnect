@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block titulo %}Solicitudes · CampusConnect{% endblock %}
+{% block contenido %}
+<h1>Solicitudes de tutoría</h1>
+{% if solicitudes %}
+<table>
+  <thead><tr><th>Estudiante</th><th>Asignatura</th><th>Horario</th><th>Estado</th><th>Responder</th></tr></thead>
+  <tbody>
+  {% for s in solicitudes %}
+    <tr><td>{{ s['estudiante'] }}</td><td>{{ s['asignatura'] }}</td>
+      <td>{{ DIAS[s['dia']] }} {{ s['inicio']|hora }}–{{ s['fin']|hora }}</td>
+      <td><span class="estado {{ s['estado'] }}">{{ s['estado'] }}</span></td>
+      <td>{% if s['estado'] == 'pendiente' %}
+        <form method="post" action="{{ url_for('tutor.responder', sol_id=s['id']) }}" class="en-linea">
+          {{ csrf_input() }}
+          <input name="motivo" placeholder="Motivo (solo si rechazas)" maxlength="200" aria-label="Motivo del rechazo">
+          <button name="accion" value="aceptar" type="submit">Aceptar</button>
+          <button name="accion" value="rechazar" type="submit" class="secundario">Rechazar</button>
+        </form>{% endif %}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}<p class="vacio">No tienes solicitudes por ahora.</p>{% endif %}
+{% endblock %}

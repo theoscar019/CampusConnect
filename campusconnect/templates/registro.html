@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block titulo %}Crear cuenta · CampusConnect{% endblock %}
+{% block contenido %}
+<section class="acceso">
+  <h1>Crea tu cuenta de estudiante</h1>
+  <form method="post" novalidate>
+    {{ csrf_input() }}
+    <label for="nombre">Nombre completo</label>
+    <input id="nombre" name="nombre" required maxlength="80" value="{{ form.get('nombre', '') }}">
+    <label for="correo">Correo institucional</label>
+    <input id="correo" name="correo" type="email" required maxlength="190" value="{{ form.get('correo', '') }}">
+    <label for="carrera">Carrera</label>
+    <select id="carrera" name="carrera" required>
+      {% for c in carreras %}<option {{ 'selected' if form.get('carrera') == c }}>{{ c }}</option>{% endfor %}
+    </select>
+    <label for="contrasena">Contraseña</label>
+    <input id="contrasena" name="contrasena" type="password" autocomplete="new-password" required maxlength="128">
+    <p class="ayuda">Mínimo 10 caracteres, con mayúscula, minúscula y número.</p>
+    <label for="contrasena2">Repite la contraseña</label>
+    <input id="contrasena2" name="contrasena2" type="password" autocomplete="new-password" required maxlength="128">
+    <button type="submit">Crear cuenta</button>
+  </form>
+  <p>¿Ya tienes cuenta? <a href="{{ url_for('auth.login') }}">Inicia sesión</a>.</p>
+</section>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block titulo %}Reportes · CampusConnect{% endblock %}
+{% block contenido %}
+<h1>Uso de la plataforma</h1>
+<p><a href="{{ url_for('admin.reportes_csv') }}">Exportar reporte (CSV)</a></p>
+<dl class="metricas">
+  {% for nombre, valor in metricas %}<div><dt>{{ nombre }}</dt><dd>{{ valor }}</dd></div>{% endfor %}
+</dl>
+<h2>Eventos de seguridad registrados</h2>
+{% if eventos %}
+<table><thead><tr><th>Evento</th><th>Cantidad</th></tr></thead>
+  <tbody>{% for e in eventos %}<tr><td>{{ e['evento'] }}</td><td>{{ e['n'] }}</td></tr>{% endfor %}</tbody></table>
+{% else %}<p class="vacio">Sin eventos registrados.</p>{% endif %}
+{% endblock %}

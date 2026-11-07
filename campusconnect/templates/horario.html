@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block titulo %}Mi horario · CampusConnect{% endblock %}
+{% block contenido %}
+<h1>Mis tramos libres</h1>
+<p class="bajada">Indica cuándo puedes estudiar. El plan solo usará estos tramos.</p>
+<form method="post" class="fila">
+  {{ csrf_input() }}
+  <div><label for="dia">Día</label>
+    <select id="dia" name="dia">{% for d in DIAS %}<option value="{{ loop.index0 }}">{{ d }}</option>{% endfor %}</select></div>
+  <div><label for="inicio">Desde</label><input id="inicio" name="inicio" type="time" required value="16:00"></div>
+  <div><label for="fin">Hasta</label><input id="fin" name="fin" type="time" required value="18:00"></div>
+  <button type="submit">Guardar tramo</button>
+</form>
+{% if bloques %}
+<table>
+  <thead><tr><th>Día</th><th>Horario</th><th></th></tr></thead>
+  <tbody>
+  {% for b in bloques %}
+    <tr><td>{{ DIAS[b['dia']] }}</td><td>{{ b['inicio']|hora }} a {{ b['fin']|hora }}</td>
+      <td><form method="post" action="{{ url_for('estudiante.horario_eliminar', bloque_id=b['id']) }}">
+        {{ csrf_input() }}<button class="secundario" type="submit">Quitar</button></form></td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}<p class="vacio">Aún no registras tramos libres. Agrega el primero arriba.</p>{% endif %}
+{% endblock %}

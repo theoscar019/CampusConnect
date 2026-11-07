@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block titulo %}Evaluaciones · CampusConnect{% endblock %}
+{% block contenido %}
+<h1>Mis evaluaciones</h1>
+<p class="bajada">Mientras más peso, dificultad y cercanía tenga una evaluación, antes aparece en tu plan.</p>
+<form method="post" class="fila">
+  {{ csrf_input() }}
+  <div><label for="asignatura_id">Asignatura</label>
+    <select id="asignatura_id" name="asignatura_id">{% for a in asignaturas %}<option value="{{ a['id'] }}">{{ a['nombre'] }}</option>{% endfor %}</select></div>
+  <div><label for="tipo">Tipo</label>
+    <select id="tipo" name="tipo">{% for t in tipos %}<option>{{ t }}</option>{% endfor %}</select></div>
+  <div><label for="fecha">Fecha</label><input id="fecha" name="fecha" type="date" required min="{{ hoy }}"></div>
+  <div><label for="ponderacion">Peso (%)</label><input id="ponderacion" name="ponderacion" type="number" min="1" max="100" value="30" required></div>
+  <div><label for="dificultad">Dificultad (1 a 5)</label><input id="dificultad" name="dificultad" type="number" min="1" max="5" value="3" required></div>
+  <button type="submit">Agregar evaluación</button>
+</form>
+{% if evaluaciones %}
+<table>
+  <thead><tr><th>Fecha</th><th>Asignatura</th><th>Tipo</th><th>Peso</th><th>Dificultad</th><th></th></tr></thead>
+  <tbody>
+  {% for e in evaluaciones %}
+    <tr><td>{{ e['fecha'] }}</td><td>{{ e['asignatura'] }}</td><td>{{ e['tipo'] }}</td>
+      <td>{{ e['ponderacion'] }}%</td><td>{{ e['dificultad'] }}</td>
+      <td><form method="post" action="{{ url_for('estudiante.evaluacion_eliminar', eval_id=e['id']) }}">
+        {{ csrf_input() }}<button class="secundario" type="submit">Quitar</button></form></td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}<p class="vacio">No hay evaluaciones registradas todavía.</p>{% endif %}
+{% endblock %}

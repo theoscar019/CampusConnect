@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block titulo %}Grupos de estudio · CampusConnect{% endblock %}
+{% block contenido %}
+<h1>Grupos de estudio</h1>
+<section>
+  <h2>Unirme a un grupo compatible</h2>
+  <p class="bajada">Buscamos grupos de la asignatura cuyos miembros comparten al menos 2 horas libres contigo por semana.</p>
+  <form method="post" action="{{ url_for('estudiante.grupo_solicitar') }}" class="fila">
+    {{ csrf_input() }}
+    <div><label for="a1">Asignatura</label>
+      <select id="a1" name="asignatura_id">{% for a in asignaturas %}<option value="{{ a['id'] }}">{{ a['nombre'] }}</option>{% endfor %}</select></div>
+    <button type="submit">Buscar grupo</button>
+  </form>
+</section>
+<section>
+  <h2>Crear un grupo nuevo</h2>
+  <form method="post" action="{{ url_for('estudiante.grupo_crear') }}" class="fila">
+    {{ csrf_input() }}
+    <div><label for="nombre">Nombre del grupo</label><input id="nombre" name="nombre" required maxlength="60"></div>
+    <div><label for="a2">Asignatura</label>
+      <select id="a2" name="asignatura_id">{% for a in asignaturas %}<option value="{{ a['id'] }}">{{ a['nombre'] }}</option>{% endfor %}</select></div>
+    <button type="submit" class="secundario">Crear grupo</button>
+  </form>
+</section>
+<section>
+  <h2>Mis grupos</h2>
+  {% if mis_grupos %}
+  <ul class="lista">{% for m in mis_grupos %}<li><strong>{{ m['nombre'] }}</strong> · {{ m['asignatura'] }} · {{ m['miembros'] }} de {{ m['capacidad'] }} integrantes</li>{% endfor %}</ul>
+  {% else %}<p class="vacio">Aún no perteneces a ningún grupo.</p>{% endif %}
+</section>
+{% endblock %}

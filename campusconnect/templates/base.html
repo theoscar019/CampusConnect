@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}CampusConnect{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="barra">
+  <a class="marca" href="{{ url_for('auth.index') }}">CampusConnect</a>
+  {% if g.usuario %}
+  <nav aria-label="Principal">
+    {% if g.usuario['rol'] == 'estudiante' %}
+      <a href="{{ url_for('estudiante.horario') }}">Mi horario</a>
+      <a href="{{ url_for('estudiante.evaluaciones') }}">Evaluaciones</a>
+      <a href="{{ url_for('estudiante.plan') }}">Plan de estudio</a>
+      <a href="{{ url_for('estudiante.grupos') }}">Grupos</a>
+      <a href="{{ url_for('estudiante.tutorias') }}">Tutorías</a>
+    {% elif g.usuario['rol'] == 'tutor' %}
+      <a href="{{ url_for('tutor.disponibilidad') }}">Mi disponibilidad</a>
+      <a href="{{ url_for('tutor.solicitudes') }}">Solicitudes</a>
+    {% else %}
+      <a href="{{ url_for('admin.asignaturas') }}">Asignaturas</a>
+      <a href="{{ url_for('admin.tutores') }}">Tutores</a>
+      <a href="{{ url_for('admin.reportes') }}">Reportes</a>
+    {% endif %}
+  </nav>
+  <form method="post" action="{{ url_for('auth.logout') }}" class="salir">
+    {{ csrf_input() }}
+    <span class="quien">{{ g.usuario['nombre'] }}</span>
+    <button type="submit" class="secundario">Cerrar sesión</button>
+  </form>
+  {% endif %}
+</header>
+<main>
+  {% with mensajes = get_flashed_messages(with_categories=true) %}
+    {% for categoria, texto in mensajes %}
+      <p class="aviso {{ categoria }}" role="status">{{ texto }}</p>
+    {% endfor %}
+  {% endwith %}
+  {% block contenido %}{% endblock %}
+</main>
+</body>
+</html>
